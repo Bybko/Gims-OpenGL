@@ -5,7 +5,7 @@ import numpy as np
 from pathlib import Path
 
 
-FONTS_DIR = Path(r'.\fonts')
+FONTS_DIR = Path(r'fonts')
 CHARACTERS_TEXTURES = []
 FONTS = []
 for file in FONTS_DIR.iterdir():
@@ -16,7 +16,7 @@ VBO = None
 VAO = None
 
 
-class CharacterSlot:
+class NumberTexture:
     def __init__(self, texture, glyph):
         self.texture = texture
         self.textureSize = (glyph.bitmap.width, glyph.bitmap.rows)
@@ -123,7 +123,7 @@ def initialize(window_size: tuple[int, int]):
     glBindVertexArray(0)
 
 
-def add_font_texture(font: str, textures_list: list[dict[str: CharacterSlot]]) -> None:
+def add_font_texture(font: str, textures_list: list[dict[str: NumberTexture]]) -> None:
     face = freetype.Face(font)
     face.set_char_size(48 * 64)
     textures_list.append({})
@@ -146,7 +146,7 @@ def add_font_texture(font: str, textures_list: list[dict[str: CharacterSlot]]) -
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
         # now store character for later use
-        textures_list[-1][chr(i)] = CharacterSlot(texture, glyph)
+        textures_list[-1][chr(i)] = NumberTexture(texture, glyph)
 
 
 def render_text(text, x, y, scale: float = 1, font: int = 0, color=(0, 0, 0)):
